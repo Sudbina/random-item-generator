@@ -55,7 +55,15 @@ namespace RandomItemGenerator
         static void Main(string[] args)
         {
             Console.WriteLine("Random Item Generator v0.1 by Jack Gibson");
-            Weapon.Generator();
+            Console.WriteLine("Press ENTER to generate and ESCAPE to exit!");
+            while (Console.ReadKey(true).Key == ConsoleKey.Enter)
+            {
+                Weapon.Generator();
+                if (Console.ReadKey(true).Key == ConsoleKey.Escape)
+                {
+                    Environment.Exit(0);
+                }
+            }
         }
     }
 }
