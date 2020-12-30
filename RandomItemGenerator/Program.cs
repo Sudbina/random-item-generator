@@ -40,7 +40,7 @@ namespace RandomItemGenerator
             return chosenPrefix;
         }
 
-        public static int createDamageStat(string weaponType, float rarityMultiplier)
+        public static int CreateDamageStat(string weaponType, float rarityMultiplier)
         {
             //A method for creating randomly generated damage values based on weaponTypes and their hardcoded base damage values
             Random rand = new Random();
@@ -64,7 +64,7 @@ namespace RandomItemGenerator
             return finalValue;
         }
 
-        public static float createRarityMultiplier(string weaponRarity)
+        public static float CreateRarityMultiplier(string weaponRarity)
         {
             //Create a modifier float that can be used to enhance stats based on rarity (Like damage)
             float rarityMultiplier = 0.0f;
@@ -88,6 +88,12 @@ namespace RandomItemGenerator
             return rarityMultiplier;
         }
 
+        //public static float CreateAttacksPerSecond(string weaponType)
+        //{
+        //    //TODO
+
+        //}
+
         public static void Generator()
         {
             //The generator method which holds the prefix arrays, weapon type array and calls the randomizer functions and weighted randomizer library to build the name, rarity and stats of the item
@@ -104,8 +110,8 @@ namespace RandomItemGenerator
             string weaponType = Randomize(weaponTypeList);
             string weaponRarity = rarityRandomizer.NextWithReplacement();
             string prefix = RandomizePrefix(meleePrefixesList, rangedPrefixesList, weaponType);
-            float rarityMultiplier = createRarityMultiplier(weaponRarity);
-            int calculatedDamage = createDamageStat(weaponType, rarityMultiplier);
+            float rarityMultiplier = CreateRarityMultiplier(weaponRarity);
+            int calculatedDamage = CreateDamageStat(weaponType, rarityMultiplier);
             //float attacksPerSecond TODO: add attacks per second and DPS;
             
             Console.WriteLine($"{prefix + " " + weaponType}");
