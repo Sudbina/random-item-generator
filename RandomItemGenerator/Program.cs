@@ -37,6 +37,29 @@ namespace RandomItemGenerator
             return chosenPrefix;
         }
 
+        public static int createDamageStat(String weaponType)
+        {
+            //A method for creating randomly generated damage values based on weaponTypes and their hardcoded base damage values.
+            Random rand = new Random();
+            int damageValue = 0;
+            int rangedBaseDamage = 7;
+            int meleeBaseDamage = 12;
+
+            switch (weaponType)
+            {
+                case "Wand":
+                case "Bow":
+                    damageValue = rangedBaseDamage + rand.Next(4);
+                    break;
+                case "Sword":
+                case "Axe":
+                    damageValue = meleeBaseDamage + rand.Next(8);
+                    break;
+            }
+
+            return damageValue;
+        }
+
         public static void Generator()
         {
             //The generator method which holds the prefix arrays, weapon type array and calls the randomizer functions to build the name of the item.
@@ -45,8 +68,10 @@ namespace RandomItemGenerator
             string[] weaponTypeList = { "Wand", "Sword", "Axe", "Bow" };
             string weaponType = Randomize(weaponTypeList);
             string prefix = RandomizePrefix(meleePrefixesList, rangedPrefixesList, weaponType);
+            int calculatedDamage = createDamageStat(weaponType);
 
             Console.WriteLine($"Generated: {prefix + " " + weaponType}");
+            Console.WriteLine($"Damage: {calculatedDamage}");
             Console.ReadLine();
         }
     }
@@ -54,7 +79,7 @@ namespace RandomItemGenerator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Random Item Generator v0.1 by Jack Gibson");
+            Console.WriteLine("Random Item Generator by Jack Gibson");
             Console.WriteLine("Press ENTER to generate and ESCAPE to exit!");
             while (Console.ReadKey(true).Key == ConsoleKey.Enter)
             {
