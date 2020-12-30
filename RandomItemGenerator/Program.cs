@@ -9,7 +9,7 @@ namespace RandomItemGenerator
         
         public static string Randomize(string[] args)
         {
-            //A simple randomizer method, pass it an array of strings and it will return a random one.
+            //A simple randomizer method, pass it an array of strings and it will return a random one
             Random rand = new Random();
             int idx = rand.Next(args.Length);
             string randomValue = args[idx];
@@ -42,7 +42,7 @@ namespace RandomItemGenerator
 
         public static int createDamageStat(string weaponType, float rarityMultiplier)
         {
-            //A method for creating randomly generated damage values based on weaponTypes and their hardcoded base damage values.
+            //A method for creating randomly generated damage values based on weaponTypes and their hardcoded base damage values
             Random rand = new Random();
             float damageValue = 0;
             int rangedBaseDamage = 7;
@@ -66,6 +66,7 @@ namespace RandomItemGenerator
 
         public static float createRarityMultiplier(string weaponRarity)
         {
+            //Create a modifier float that can be used to enhance stats based on rarity (Like damage)
             float rarityMultiplier = 0.0f;
 
             switch (weaponRarity)
@@ -89,7 +90,7 @@ namespace RandomItemGenerator
 
         public static void Generator()
         {
-            //The generator method which holds the prefix arrays, weapon type array and calls the randomizer functions to build the name of the item.
+            //The generator method which holds the prefix arrays, weapon type array and calls the randomizer functions and weighted randomizer library to build the name, rarity and stats of the item
 
             IWeightedRandomizer<string> rarityRandomizer = new DynamicWeightedRandomizer<string>();
                 rarityRandomizer.Add("Common", 4);
@@ -105,7 +106,7 @@ namespace RandomItemGenerator
             string prefix = RandomizePrefix(meleePrefixesList, rangedPrefixesList, weaponType);
             float rarityMultiplier = createRarityMultiplier(weaponRarity);
             int calculatedDamage = createDamageStat(weaponType, rarityMultiplier);
-            //float attacksPerSecond;
+            //float attacksPerSecond TODO: add attacks per second and DPS;
             
             Console.WriteLine($"{prefix + " " + weaponType}");
 
@@ -138,6 +139,7 @@ namespace RandomItemGenerator
         {
             ConsoleKey key;
             Console.WriteLine("Random Item Generator by Jack Gibson");
+            Console.WriteLine("Press ENTER to generate an item, press ESCAPE to quit!");
 
             do
             {
