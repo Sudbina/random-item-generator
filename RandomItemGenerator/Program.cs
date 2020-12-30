@@ -88,12 +88,6 @@ namespace RandomItemGenerator
             return rarityMultiplier;
         }
 
-        //public static float CreateAttacksPerSecond(string weaponType)
-        //{
-        //    //TODO
-
-        //}
-
         public static void Generator()
         {
             //The generator method which holds the prefix arrays, weapon type array and calls the randomizer functions and weighted randomizer library to build the name, rarity and stats of the item
@@ -111,7 +105,8 @@ namespace RandomItemGenerator
             string weaponRarity = rarityRandomizer.NextWithReplacement();
             string prefix = RandomizePrefix(meleePrefixesList, rangedPrefixesList, weaponType);
             float rarityMultiplier = CreateRarityMultiplier(weaponRarity);
-            int calculatedDamage = CreateDamageStat(weaponType, rarityMultiplier);
+            int minBaseDamage = CreateDamageStat(weaponType, rarityMultiplier);
+            int maxBaseDamage = minBaseDamage + new Random().Next(5,7);
             //float attacksPerSecond TODO: add attacks per second and DPS;
             
             Console.WriteLine($"{prefix + " " + weaponType}");
@@ -135,7 +130,7 @@ namespace RandomItemGenerator
             //Now reset the console foreground colour
             Console.ResetColor();
 
-            Console.WriteLine($"Damage: {calculatedDamage}");
+            Console.WriteLine($"Damage: {minBaseDamage} - {maxBaseDamage}");
             Console.ReadLine();
         }
     }
