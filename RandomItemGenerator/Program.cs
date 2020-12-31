@@ -80,6 +80,9 @@ namespace RandomItemGenerator
                 case "Rare":
                     rarityMultiplier = 2.5f;
                     break;
+                case "Epic":
+                    rarityMultiplier = 2.8f;
+                    break;
                 case "Legendary":
                     rarityMultiplier = 3.3f;
                     break;
@@ -93,13 +96,15 @@ namespace RandomItemGenerator
             //The generator method which holds the prefix arrays, weapon type array and calls the randomizer functions and weighted randomizer library to build the name, rarity and stats of the item
 
             IWeightedRandomizer<string> rarityRandomizer = new DynamicWeightedRandomizer<string>();
-                rarityRandomizer.Add("Common", 4);
-                rarityRandomizer.Add("Magic", 3);
-                rarityRandomizer.Add("Rare", 2);
-                rarityRandomizer.Add("Legendary", 1);
+            rarityRandomizer.Add("Common", 10);
+            rarityRandomizer.Add("Magic", 6);
+            rarityRandomizer.Add("Rare", 4);
+            rarityRandomizer.Add("Epic", 2);
+            rarityRandomizer.Add("Legendary", 1);
 
             string[] meleePrefixesList = { "Bronze", "Silver", "Golden" };
             string[] rangedPrefixesList = { "Accurate", "Fast", "Homing" };
+            //TODO: Add functionality to prefixes: Elemental, speed, damage, crit?
             string[] weaponTypeList = { "Wand", "Sword", "Axe", "Bow" };
             string weaponType = Randomize(weaponTypeList);
             string weaponRarity = rarityRandomizer.NextWithReplacement();
@@ -107,8 +112,10 @@ namespace RandomItemGenerator
             float rarityMultiplier = CreateRarityMultiplier(weaponRarity);
             int minBaseDamage = CreateDamageStat(weaponType, rarityMultiplier);
             int maxBaseDamage = minBaseDamage + new Random().Next(5,7);
-            //float attacksPerSecond TODO: add attacks per second and DPS;
-            
+            //float attacksPerSecond TODO: add attacks per second and DPS
+            //int criticalChance; TODO: add crits
+            //float criticalMultiplier; TODO: add crits
+
             Console.WriteLine($"{prefix + " " + weaponType}");
 
             //Set this console line to match item rarity for some pizazz!
@@ -119,6 +126,9 @@ namespace RandomItemGenerator
                     break;
                 case "Rare":
                     Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+                case "Epic":
+                    Console.ForegroundColor = ConsoleColor.Magenta;
                     break;
                 case "Legendary":
                     Console.ForegroundColor = ConsoleColor.Red;
