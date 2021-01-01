@@ -90,6 +90,66 @@ namespace RandomItemGenerator
 
             return rarityMultiplier;
         }
+        
+        public static double CreateAttacksPerSecond(string weaponType, string prefix, string rarity)
+        {
+            float baseAttacksPerSecond = 0;
+            float prefixAttacksPerSecond = 0;
+            float rarityAttacksPerSecond = 0;
+            float calculatedAttacksPerSecond;
+            double roundedAttacksPerSecond;
+
+
+            switch (weaponType)
+            {
+                case "Sword":
+                case "Bow":
+                    baseAttacksPerSecond = 1.0f;
+                    break;
+                case "Wand":
+                    baseAttacksPerSecond = 1.1f;
+                    break;
+                case "Axe":
+                    baseAttacksPerSecond = 0.8f;
+                    break;
+            }
+
+            switch (prefix)
+            {
+                default:
+                    break;
+                case "Fast":
+                    prefixAttacksPerSecond = 0.5f;
+                    break;
+                case "Silver":
+                    prefixAttacksPerSecond = 0.2f;
+                    break;
+            }
+
+            switch (rarity)
+            {
+                case "Common":
+                    rarityAttacksPerSecond = 0.0f;
+                    break;
+                case "Magic":
+                    rarityAttacksPerSecond = 0.2f;
+                    break;
+                case "Rare":
+                    rarityAttacksPerSecond = 0.3f;
+                    break;
+                case "Epic":
+                    rarityAttacksPerSecond = 0.4f;
+                    break;
+                case "Legendary":
+                    rarityAttacksPerSecond = 0.4f;
+                    break;
+
+            }
+            calculatedAttacksPerSecond = baseAttacksPerSecond + prefixAttacksPerSecond + rarityAttacksPerSecond;
+            roundedAttacksPerSecond = Math.Round(calculatedAttacksPerSecond, 1);
+            return calculatedAttacksPerSecond;
+
+        }
 
         public static void Generator()
         {
@@ -112,7 +172,7 @@ namespace RandomItemGenerator
             float rarityMultiplier = CreateRarityMultiplier(weaponRarity);
             int minBaseDamage = CreateDamageStat(weaponType, rarityMultiplier);
             int maxBaseDamage = minBaseDamage + new Random().Next(5,7);
-            //float attacksPerSecond TODO: add attacks per second and DPS
+            double attacksPerSecond = CreateAttacksPerSecond(weaponType, prefix, weaponRarity);
             //int criticalChance; TODO: add crits
             //float criticalMultiplier; TODO: add crits
 
@@ -141,6 +201,7 @@ namespace RandomItemGenerator
             Console.ResetColor();
 
             Console.WriteLine($"Damage: {minBaseDamage} - {maxBaseDamage}");
+            Console.WriteLine($"Attacks Per Second: {attacksPerSecond}");
             Console.ReadLine();
         }
     }
